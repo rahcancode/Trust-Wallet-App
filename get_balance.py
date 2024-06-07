@@ -29,8 +29,10 @@ token_abi = [
 contract = web3.eth.contract(address=token_address, abi=token_abi)
 
 # Query the balance at the specified block number
-balance = contract.functions.balanceOf(wallet_address).call(block_identifier=block_number)
-
-# Convert the balance from wei to the token's decimal format (18 decimals)
-balance_in_bsc_usd = web3.fromWei(balance, 'ether')
-print(f"The balance of the wallet at block {block_number} is: {balance_in_bsc_usd} BSC-USD")
+try:
+    balance = contract.functions.balanceOf(wallet_address).call(block_identifier=block_number)
+    # Convert the balance from wei to the token's decimal format (18 decimals)
+    balance_in_bsc_usd = web3.fromWei(balance, 'ether')
+    print(f"The balance of the wallet at block {33078495} is: {balance_in_bsc_usd} BSC-USD")
+except Exception as e:
+    print(f"An error occurred: {e}")
