@@ -5,7 +5,7 @@ bsc = "https://bsc-dataseed.binance.org/"
 web3 = Web3(Web3.HTTPProvider(bsc))
 
 # Check if the connection is successful
-if not web3.isConnected():
+if not web3.is_connected():
     print("Failed to connect to BNB Smart Chain")
     exit()
 
@@ -25,6 +25,10 @@ token_abi = [
     }
 ]
 
+# Convert addresses to checksum format
+wallet_address = Web3.toChecksumAddress(wallet_address)
+token_address = Web3.toChecksumAddress(token_address)
+
 # Create contract instance
 contract = web3.eth.contract(address=token_address, abi=token_abi)
 
@@ -33,6 +37,6 @@ try:
     balance = contract.functions.balanceOf(wallet_address).call(block_identifier=block_number)
     # Convert the balance from wei to the token's decimal format (18 decimals)
     balance_in_bsc_usd = web3.fromWei(balance, 'ether')
-    print(f"The balance of the wallet at block {33078495} is: {balance_in_bsc_usd} BSC-USD")
+    print(f"The balance of the wallet at block {block_number} is: {balance_in_bsc_usd} BSC-USD")
 except Exception as e:
     print(f"An error occurred: {e}")
